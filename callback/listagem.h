@@ -2,10 +2,11 @@
 #define __listagem_h__
 
 typedef struct listagem {
-    void* info;
-    listagem* proximo;
+    int valor;
+    struct listagem* proximo;
 } lista;
 
 lista* criar_lista();
-lista* inserir_lista(lista* l, void* info);
+lista* inserir_lista(lista* l, int num);
 lista* percorrer_lista(lista* l);
+void imprimir(lista *l);

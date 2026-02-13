@@ -1,49 +1,45 @@
-// Online C compiler to run C program online
-#include <stdio.h>
-#include <stdlib.h>
 #include "lista.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-
-
-void inserir_inicio(No **lista, int num){
+void inserir_inicio(No** lista, int num){
     No* novo = malloc(sizeof(No));
-    
     if(novo){
-        novo-> valor = num;
+        novo->valor = num;
         novo->proximo = *lista;
         *lista = novo;
     } else {
-        printf("Erro...");
+        printf("Erro...\n");
     }
 }
 
-void inserir_fim(No **lista, int num){
-    No* aux;
+void inserir_fim(No** lista, int num){
     No* novo = malloc(sizeof(No));
-    //conectar a estrututa
-    if(novo){
-        novo->valor = num;
-        novo->proximo = NULL;
-        
-    //verificar se é o primeiro
     if(novo == NULL){
+        printf("Erro...\n");
+        return;
+    }
+    
+    novo->valor = num;
+    novo->proximo = NULL;
+
+    if(*lista == NULL){
         *lista = novo;
-    } else {
-        while(aux->proximo != NULL){
-            aux = aux->proximo;
-        aux->proximo = novo;
-        }
+        return;
     }
+
+    No* aux = *lista; // Esta linha estava faltando!
     
-    } else {
-        printf("Erro...");
+    while(aux->proximo != NULL){
+        aux = aux->proximo;
     }
+    aux->proximo = novo;
 }
-    
 
-int main() {
-    // Write C code here
-    printf("Try programiz.pro");
-
-    return 0;
+void imprimir(No* lista){
+    while(lista != NULL){
+        printf("%d -> ", lista->valor);
+        lista = lista->proximo;
+    }
+    printf("NULL\n");
 }
