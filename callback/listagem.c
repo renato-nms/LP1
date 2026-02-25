@@ -2,33 +2,34 @@
 #include <stdlib.h>
 #include "listagem.h"
 
-lista* criar_lista() {
+listagem* criar_listagem() {
     return NULL;
 }
 
-lista* inserir_lista(lista* l, int num){
- lista* novo = malloc(sizeof(lista));
+listagem* inserir_listagem(listagem* lista, int num){
+ listagem* novo = malloc(sizeof(listagem));
 
  if(novo == NULL) {
     printf("Erro ao alocar memoria\n");
  }
     novo->valor = num;
-    novo->proximo = l;
-    l = novo;
-    return l;
+    novo->proximo = lista;
+    lista = novo;
+    return lista;
 }
 
-lista* percorrer_lista(lista* l){
-    lista* novo = malloc(sizeof(lista));
+listagem* percorrer_listagem(listagem* lista){
+    listagem* novo = malloc(sizeof(listagem));
     
-    if(l == NULL){
-        l = novo;
-        return l;
+    if(lista == NULL){
+        return novo;
     }
-    lista* aux = l;
+    listagem* aux = lista;
 
     while(aux->proximo != NULL) {
         aux = aux->proximo;
     }
+    aux->proximo = novo;
+    return lista;
 }
 

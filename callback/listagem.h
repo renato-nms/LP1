@@ -4,9 +4,9 @@
 typedef struct listagem {
     int valor;
     struct listagem* proximo;
-} lista;
+} listagem;
 
-lista* criar_lista();
-lista* inserir_lista(lista* l, int num);
-lista* percorrer_lista(lista* l);
-void imprimir(lista *l);
+listagem* criar_listagem();
+listagem* inserir_listagem(listagem* lista, int num);
+listagem* percorrer_listagem(listagem* lista);
+void imprimir(listagem *lista);

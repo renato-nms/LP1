@@ -20,24 +20,13 @@ int main() {
 
     No* lista = NULL;
 
-    // Criando primeiro ponto
-    Ponto* p1 = malloc(sizeof(Ponto));
-    p1->x = 1.0;
-    p1->y = 2.0;
+    
 
-    // Criando segundo ponto
-    Ponto* p2 = malloc(sizeof(Ponto));
-    p2->x = 3.0;
-    p2->y = 4.0;
+    lista = inserirFim(lista, 1.0, 2.0);
+    lista = inserirFim(lista, 3.0, 4.0);
+    lista = inserirInicio(lista, 5.0, 6.0);
+    lista = inserirInicio(lista, 7.0, 8.0);
 
-    // Criando terceiro ponto
-    Ponto* p3 = malloc(sizeof(Ponto));
-    p3->x = 5.0;
-    p3->y = 6.0;
-
-    lista = inserirFim(lista, p1);
-    lista = inserirFim(lista, p2);
-    lista = inserirInicio(lista, p3);
 
     printf("Imprimindo lista:\n");
     imprimirLista(lista, imprimirPonto);
