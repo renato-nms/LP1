@@ -7,6 +7,10 @@ typedef struct No{
     struct No* direita;
 } Noarv;
 
+int nulo(Noarv* raiz){
+    return raiz == NULL;
+}
+
 Noarv* criar(void* valor){
     Noarv* novo = malloc(sizeof(Noarv));
     if(novo == NULL){
@@ -21,7 +25,7 @@ Noarv* criar(void* valor){
 
 Noarv* inserir(Noarv* raiz, void* info, int (*comparar)(const void *, const void *)) {
     if(raiz == NULL){
-        return criar(info);
+        return criar(raiz);
     }
 
     if(comparar(info,raiz->info) < 0) {
@@ -32,40 +36,58 @@ Noarv* inserir(Noarv* raiz, void* info, int (*comparar)(const void *, const void
     return raiz;
 }
 
-Noarv* busca(Noarv* raiz, void *info){
-    if(info == raiz->info){
+Noarv* busca(Noarv* raiz, int(*condicao)(const void*)){
+    if(raiz == NULL){
+        return NULL;
+    }   
+    int cmp = condicao(raiz->info);
+    if(cmp == 0){
         return raiz;
-    } else if(info < raiz->info){
-        raiz->esquerda = busca(raiz->esquerda,info);
+    }
+    if(cmp < 0){
+        return busca(raiz->esquerda,condicao);
     } else {
-        raiz->direita = busca(raiz->direita,info);
+        return busca(raiz->direita,condicao);
     }
 }
 
-Noarv* altura(Noarv* raiz){
+void map(Noarv* raiz, void(*operacao)(void *)){
+    if(raiz == NULL){
+        return;
+    }
+    operacao(raiz->info);
+    map(raiz->esquerda,operacao);
+    map(raiz->direita,operacao);
+}
+
+int altura(Noarv* raiz){
     if(raiz == NULL){
         return 0;
     }
-    int altura_esquerda = altura(raiz->esquerda);
-    int altura_direita = altura(raiz->direita);
-    return (altura_esquerda > altura_direita ? altura_esquerda : altura_direita) + 1;
+    Noarv* esq = altura(raiz->esquerda);
+    Noarv* dir = altura(raiz->direita);
+    return(esq < dir ? esq : dir)+1;
 }
+
+
+
 
 void imprimir_ordem(Noarv* raiz, void(*imprimir)(const void *)){
 if(raiz == NULL){
-    return NULL;
+    return;
 }
+
 imprimir(raiz->info);
 imprimir_ordem(raiz->esquerda, imprimir);
 imprimir_ordem(raiz->direita, imprimir);
 }
 
 void liberar(Noarv * raiz, void (*destruir)(const void*)){
-    if(raiz == NULL){
-        return;
+    if (raiz == NULL){
+        return NULL;
     }
-    liberar(raiz->esquerda, destruir);
-    liberar(raiz->direita, destruir);
+    liberar(raiz->esquerda,destruir);
+    liberar(raiz->direita,destruir);
     destruir(raiz->info);
     free(raiz);
 }
