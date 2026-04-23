@@ -3,9 +3,41 @@
 
 typedef struct No{
     void* info;
-    struct No* esquerda;
-    struct No* direita;
-} Noarv;
+    struct No* lst;
+    struct No* rst;
+} Node;
+
+// QUESTÃO 1
+Node* tree_copy(Node* root, void* (copy_info)(void*)){
+    Node* arvore = copy_info(root->info);
+    
+    tree_copy(arvore->lst, copy_info);
+    copy_info(arvore->info);
+    
+    tree_copy(arvore->rst, copy_info);
+    
+    return arvore;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int nulo(Noarv* raiz){
     return raiz == NULL;

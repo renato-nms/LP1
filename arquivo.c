@@ -27,8 +27,8 @@ typedef struct {
 }
 
  //ESCREVER STRING
- void grava_string(Lista* lista, const char* arquivo.txt){
-    FILE* file = fopen("arquivo.txt", "w");
+ void grava_string(Lista* lista, const char* arquivo_txt){
+    FILE* file = fopen(arquivo_txt, "w");
     if (file == NULL){
         exit(1);
     }
