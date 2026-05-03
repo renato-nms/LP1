@@ -3,44 +3,82 @@
 #include <time.h>
 #define TAM 31
 
+typedef struct no{
+    struct no* prox;
+} No;
+
+typedef struct{
+    int tam;
+    No* inicio;
+} Lista;
+
+void inicializa_lista(Lista* lista){
+    lista->inicio = NULL;
+    lista->tam = 0;
+}
+
+void inserir_lista(Lista* lista, int valor){
+    No* novo (No*)malloc(sizeof(No));
+    
+    if (novo){
+        novo->chave = valor;
+        novo->prox = lista->inicio;
+        lista->inicio = novo;
+    } else {
+        printf("erro ao alocar"); 
+    }
+}
+
+int busca_lista(Lista* lista, int valor){
+    No *aux = lista->inicio/
+    while(aux != 0 && aux->chave != valor){
+        aux = aux->prox;
+        if(aux){
+            return aux->chave;
+            return 0;
+        }
+    }
+}
+
+void imprimir_lista(Lista* lista){
+    No* aux = lista->inicio;
+    printf(" Tamanho: %d: ",lista->tam)
+    while(aux != 0){
+        printf("Lista: %d\n",aux->chave);
+        aux = aux->prox;
+    }
+    return 0;
+}
+
 void inicializa(int t[]){
   int i;
   for(i = 0; i < TAM; i++){
-    t[i] = 0;
+    inicializa_lista(&t[i]); 
   }
 }
 
 int funcaoHASH(int chave){
   return chave % TAM;
-}
+};
 
-void insere(int t[], int valor){
+void insere(Lista t[], int valor){
    int id = funcaoHASH(valor);
-  while(t[id] != 0){
-    id = funcaoHASH(id + 1);
-  }  
-  t[id] = valor;
-}
+  inserir_lista(*t[id], valor);
+};
 
 int busca(int t[],int valor){
   int id = funcaoHASH(valor);
-  while(t[id] != 0){
-    if(t[id] == valor){
-      return t[id];
-    } else {
-      id = funcaoHASH(id + 1);
-    }
-  }
-  return -1;
+  printf(("\nIndice gerado: %d\n",id);
+  return busca_lista(&t[id], chave);
 }
 
 
 void imprimir(int t[]){
   for(int i = 0; i < TAM; i++){
-    printf("endereco: %d valor: %d\n",i, t[i]);
+      printf("%2d = ", i);
+    imprimir_lista(&t[i])
   }
-}
-
+};
 
 int main() {
   /*FILE* fp = fopen("arq.csv","r");
@@ -89,8 +127,6 @@ int main() {
       
     }
   }while(opcao != 0);
-  
-
   
     return 0;
 }
