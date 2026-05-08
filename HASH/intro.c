@@ -10,6 +10,13 @@ typedef struct no {
     struct no* prox;
 } No;
 
+inicializa(int t[]){
+    int i;
+    for(i = 0; i < TAM; i++){
+        t[i] = 0;
+    }
+}
+
 int funcaoHASH(int chave) {
     return chave % TAM;
 } // Sem ';' após a função
@@ -32,6 +39,20 @@ int busca(int t[], int valor) {
         }
         return -1;
     }
+}
+
+int conta(int t[], int chave){
+    int cont = 0, qtd = 0;
+    int aux = t[chave];
+
+    while( aux!= NULL) {
+        if(cont != 0){
+            qtd++;
+        }
+        cont++;
+        qaux = aux->prox;
+    }
+
 }
 
 void imprimir(int t[]) {
