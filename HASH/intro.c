@@ -1,132 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #define TAM 31
 
-typedef struct no{
+// Faltava o campo 'int chave' na struct para armazenar o valor
+typedef struct no {
+    int chave; 
     struct no* prox;
 } No;
 
-typedef struct{
-    int tam;
-    No* inicio;
-} Lista;
+int funcaoHASH(int chave) {
+    return chave % TAM;
+} // Sem ';' após a função
 
-void inicializa_lista(Lista* lista){
-    lista->inicio = NULL;
-    lista->tam = 0;
-}
-
-void inserir_lista(Lista* lista, int valor){
-    No* novo (No*)malloc(sizeof(No));
-    
-    if (novo){
-        novo->chave = valor;
-        novo->prox = lista->inicio;
-        lista->inicio = novo;
-    } else {
-        printf("erro ao alocar"); 
+void insere(int t[], int valor) {
+    int id = funcaoHASH(valor);
+    while(t[id] != 0){
+        id = funcaoHASH(id + 1);
     }
+    t[id] = valor;
 }
 
-int busca_lista(Lista* lista, int valor){
-    No *aux = lista->inicio/
-    while(aux != 0 && aux->chave != valor){
-        aux = aux->prox;
-        if(aux){
-            return aux->chave;
-            return 0;
+int busca(int t[], int valor) {
+    int id = funcaoHASH(valor);
+    while(t[id] != 0){
+        if(t[id] == valor){
+            return t[id];
+        } else {
+            id = funcaoHASH(id + 1);
         }
+        return -1;
     }
 }
 
-void imprimir_lista(Lista* lista){
-    No* aux = lista->inicio;
-    printf(" Tamanho: %d: ",lista->tam)
-    while(aux != 0){
-        printf("Lista: %d\n",aux->chave);
-        aux = aux->prox;
+void imprimir(int t[]) {
+    for (int i = 0; i < TAM; i++) {
+        printf("endereco = %2d e valor = ", i, t[i]);
+      // Faltava ';'
     }
-    return 0;
 }
-
-void inicializa(int t[]){
-  int i;
-  for(i = 0; i < TAM; i++){
-    inicializa_lista(&t[i]); 
-  }
-}
-
-int funcaoHASH(int chave){
-  return chave % TAM;
-};
-
-void insere(Lista t[], int valor){
-   int id = funcaoHASH(valor);
-  inserir_lista(*t[id], valor);
-};
-
-int busca(int t[],int valor){
-  int id = funcaoHASH(valor);
-  printf(("\nIndice gerado: %d\n",id);
-  return busca_lista(&t[id], chave);
-}
-
-
-void imprimir(int t[]){
-  for(int i = 0; i < TAM; i++){
-      printf("%2d = ", i);
-    imprimir_lista(&t[i])
-  }
-};
 
 int main() {
-  /*FILE* fp = fopen("arq.csv","r");
-  
-  char buffer[1024];
-  
-  while(fgets(buffer,sizeof(buffer),fp ) != NULL){
-    printf("Lido: %s",buffer);
-  }
-  
-  fclose(fp);*/
-  int opcao, valor, retorno, tabela[TAM];
-  inicializa(tabela);
-  
-  
-  
-  do{
-    printf("\n\t0- Sair\n\t-1 Inserir\n\t2- Buscar\n\t3- Imprimir");
-    scanf("%d",&opcao);
+    int opcao, valor, retorno;
+    int tabela[TAM]; // A tabela é um array de structs 'Lista'
     
-    switch(opcao){
-      case 1:
-      valor = rand() % 1000; // número entre 0 e 999
-    printf("Valor gerado: %d\n", valor);
-    insere(tabela, valor);
-      break;
-      
-      case 2:
-      srand(time(NULL));
-      for(int i = 0; i < TAM; i++){
-          printf("%d", valor % 100);
-      }
-      retorno = busca(tabela,valor);
-      if(retorno != 0){
-        printf("Valor encontrado: %d",retorno);
-      } else {
-        printf("Valor nao encontrado");
-      }
-      break;
-      case 3:
-      imprimir(tabela);
-      break;
-      
-      default:
-      printf("Opcao invalida\n");
-      
-    }
-  }while(opcao != 0);
-  
+    srand(time(NULL)); // Inicializa o random uma vez só no começo
+    inicializa(tabela);
+    
+    do {
+        printf("\n\t0- Sair\n\t1- Inserir\n\t2- Buscar\n\t3- Imprimir\n\tOpcao: ");
+        scanf("%d", &opcao);
+        
+        switch (opcao) {
+            case 1:
+                valor = rand() % 1000;
+                printf("Valor gerado: %d\n", valor);
+                insere(tabela, valor);
+                break;
+                
+            case 2:
+                printf("Digite o valor para buscar: ");
+                scanf("%d", &valor);
+                retorno = busca(tabela, valor);
+                if (retorno != 0) {
+                    printf("Valor encontrado: %d\n", retorno);
+                } else {
+                    printf("Valor nao encontrado\n");
+                }
+                break;
+                
+            case 3:
+                imprimir(tabela);
+                break;
+                
+            default:
+                if(opcao != 0) printf("Opcao invalida\n");
+        }
+    } while (opcao != 0);
+    
     return 0;
 }
